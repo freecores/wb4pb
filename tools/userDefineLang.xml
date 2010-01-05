@@ -35,8 +35,8 @@
 -- description: kcpsm3 assembler syntax highlighting for notepad++ programming 
 --              editor (http://notepad-plus.sourceforge.net)
 -- todo4user: copy to notepad++ installation directory
--- version: 0.0.0
--- changelog: - 0.0.0, initial release
+-- version: 0.0.1
+-- changelog: - 0.0.1, initial release
 --            - ...
 ------------------------------------------------------------------------------->
 <NotepadPlus>
