@@ -44,7 +44,7 @@
 # Verilog (R) simulation flow requires Xilinx (R) ISE (R) to be installed.
 
 # user settings: preferred hdl and working directory
-set wd "e:/home_users/ste.fis/projects/wb4pb/sim"
+set wd "e:/home_users/ste.fis/projects/wb4pb/trunk/sim"
 set isVHDL no
 
 # working directory cannot be changed while simulation is running
