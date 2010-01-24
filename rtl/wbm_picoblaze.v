@@ -66,7 +66,7 @@ module wbm_picoblaze (
   wire  clk;
   
   output wbm_cyc_o;
-  reg    wbm_cyc_o;
+  wire   wbm_cyc_o;
   output wbm_stb_o; 
   reg    wbm_stb_o;
   output wbm_we_o; 
@@ -103,7 +103,7 @@ module wbm_picoblaze (
   ;
   reg[1:0] state;
  
-  always@(wbm_stb_o) wbm_cyc_o = wbm_stb_o;
+  assign wbm_cyc_o = wbm_stb_o;
 
   always@(posedge clk) begin
     
@@ -133,7 +133,7 @@ module wbm_picoblaze (
         end
       S_SOFTWARE_HANDSHAKE:
         // software recognition of wishbone handshake
-        if (pb_read_strobe_i) begin
+        if (pb_read_strobe_i)
           // transfer complete for a write access
           if (wbm_we_o) begin
             pb_in_port_o <= 8'h00;
@@ -144,7 +144,6 @@ module wbm_picoblaze (
             pb_in_port_o <= wb_buffer;
             state <= S_SOFTWARE_READ;
           end 
-        end
       S_SOFTWARE_READ:
         // transfer complete for a read access after software recognition of
         // wishbone data

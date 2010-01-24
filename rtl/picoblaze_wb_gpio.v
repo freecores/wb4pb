@@ -89,9 +89,8 @@ module picoblaze_wb_gpio (
   integer i;
   
   // reset synchronisation
-  always@(clk) begin
+  always@(clk)
     rst <= p_rst_i;
-  end
   assign clk = p_clk_i;
   
   // module instances
@@ -155,14 +154,12 @@ module picoblaze_wb_gpio (
   
   // i/o buffer generation
   assign gpio_in = p_gpio_io;
-  always@(gpio_oe or gpio_out) begin
-    for (i = 0; i <= 7; i = i + 1) begin
+  always@(gpio_oe or gpio_out)
+    for (i = 0; i <= 7; i = i + 1)
       if (gpio_oe[i] == IS_OUTPUT)
         gpio[i] = gpio_out[i];
       else
         gpio[i] = 1'bZ;
-    end
-  end
   assign p_gpio_io = gpio;
   
 endmodule
