@@ -106,7 +106,7 @@ foreach baud_rate $BAUD_RATES {
     # creating strings with constant definitions in kcpsm3 assembler syntax,
     # splitting into high and low byte
     puts $f "${comment}CONSTANT UART_BAUD_LO_${baud_rate}_VALUE , [string range\
-             $baud_limit_hex 2 3] ; actual baud rate [format %.2f \
+             $baud_limit_hex 2 3] ; actual baud rate [format %.2f\
              $actual_baud_rate]"
     puts $f "${comment}CONSTANT UART_BAUD_HI_${baud_rate}_VALUE , [string range\
              $baud_limit_hex 0 1] ; => baud rate error [format %.3f [expr 100 *\
