@@ -42,13 +42,13 @@
 
 
 module picoblaze_wb_gpio (
-  p_rst_i,
+  p_rst_n_i,
   p_clk_i,
   
   p_gpio_io
 );
 
-  input p_rst_i;
+  input p_rst_n_i;
   wire  p_rst_i;
   input p_clk_i;
   wire  p_clk_i;
@@ -90,7 +90,7 @@ module picoblaze_wb_gpio (
   
   // reset synchronisation
   always@(clk)
-    rst <= p_rst_i;
+    rst <= ! p_rst_n_i;
   assign clk = p_clk_i;
   
   // module instances

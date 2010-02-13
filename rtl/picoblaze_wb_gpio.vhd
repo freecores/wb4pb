@@ -48,7 +48,7 @@ use ieee.std_logic_1164.all;
 entity picoblaze_wb_gpio is
   port
   (
-    p_rst_i : in std_logic;
+    p_rst_n_i : in std_logic;
     p_clk_i : in std_logic;
     
     p_gpio_io : inout std_logic_vector(7 downto 0)
@@ -161,7 +161,7 @@ begin
   -- reset synchronisation
   process(clk)
   begin
-    rst <= p_rst_i;
+    rst <= not p_rst_n_i;
   end process;
   clk <= p_clk_i;
   
