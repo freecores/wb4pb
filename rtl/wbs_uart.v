@@ -180,9 +180,8 @@ module wbs_uart (
       default: ;
     endcase
   
-    if (rst) begin
+    if (rst)
       wbs_ack_o <= 1'b0;
-    end
       
   end
   
