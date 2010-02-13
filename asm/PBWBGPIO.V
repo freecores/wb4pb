@@ -15,7 +15,7 @@
 //Command: kcpsm3 pbwbgpio.psm
 //Device: Spartan-3, Spartan-3E, Virtex-II, and Virtex-II Pro FPGAs
 //Design Name: pbwbgpio
-//Generated 03Jan2010-20:03:33.
+//Generated 13Feb2010-17:50:48.
 //Purpose:
 // pbwbgpio verilog program definition.
 //

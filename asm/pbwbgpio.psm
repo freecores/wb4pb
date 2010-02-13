@@ -39,25 +39,17 @@
 ;;            - ...
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-; IMPORTANT NOTICE!
-; be carefull, if using interrupts. wishbone cycles must be atomar, as any 
-; other processor local bus cycles are normally be. interrupting wishbone 
-; access may cause a crash of external wishbone master fsm, especially, if 
-; program flow through isr leads to another wishbone cycle!
 
-
+; wishbone variables
 NAMEREG sF , wb_addr
 NAMEREG sE , wb_data ; also used as tmp-reg for status polling
-
-CONSTANT WB_ACK_FLAG , 01
-
-CONSTANT GPIO_IO_ADDR , 00
-CONSTANT GPIO_OE_ADDR , 01
 
 
 ADDRESS 000
 
 ; main entry point
+;;;;;;;;;;;;;;;;;;
+
 DISABLE INTERRUPT
 
 CALL gpio_init
@@ -76,6 +68,16 @@ mainloop:
   CALL wb_wr
   JUMP mainloop
 
+  
+; wbs_gpio module subroutines and settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; usage:
+; 1. set bitmasks for output enable and output level in gpio_init subroutine
+; 2. call gpio_init subroutine to configure wbs_gpio module for operation
+; 3. use wb_wr and wb_rd subroutines to access i/o register
+
+; gpio start-up configuration, i. e. i/o direction and default output value 
 gpio_init:
   ; setting all outputs low
   LOAD wb_addr , GPIO_IO_ADDR
@@ -86,6 +88,14 @@ gpio_init:
   LOAD wb_data , 0F
   CALL wb_wr
 RETURN  
+
+; register addressing
+CONSTANT GPIO_IO_ADDR , 00 ; input/output register
+CONSTANT GPIO_OE_ADDR , 01 ; output-enable register
+
+
+; wbm_picoblaze module subroutines and settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; subroutines wb_wr and wb_rd are working together with external wbm_picoblaze
 ; wishbone adapter module and therefore should not be modified. wb_wait_on_ack 
@@ -118,7 +128,8 @@ RETURN
 ;
 ; LOAD wb_addr , <user address> ; setting up address
 ; CALL wb_rd ; starting wishbone read cycle
-; <next user instruction> ; wishbone cycle finished, wb_data is updated now
+; LOAD <user data> , wb_data ; wb_data is updated now
+; <next user instruction> ; wishbone cycle finished
 
 ; wishbone write access
 wb_wr:
@@ -138,6 +149,18 @@ wb_wait_on_ack:
   TEST wb_data , WB_ACK_FLAG
   JUMP Z , wb_wait_on_ack
 RETURN
+
+CONSTANT WB_ACK_FLAG , 01
+
+
+; interrupt subroutines and settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; IMPORTANT NOTICE!
+; be carefull, if using interrupts. wishbone cycles must be atomar, as any 
+; other processor local bus cycles are normally be. interrupting wishbone 
+; access may cause a crash of external wishbone master fsm, especially, if 
+; program flow through isr leads to another wishbone cycle!
 
 ; interrupt handling template, if needed
 isr:
