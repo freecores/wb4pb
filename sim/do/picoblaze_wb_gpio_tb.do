@@ -45,7 +45,7 @@
 
 # user settings: preferred hdl and working directory
 set wd "e:/home_users/ste.fis/projects/wb4pb/trunk/sim"
-set isVHDL no
+set isVHDL yes
 
 # working directory cannot be changed while simulation is running
 if {![string equal -nocase [pwd] $wd]} {
