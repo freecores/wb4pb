@@ -55,6 +55,7 @@ module picoblaze_wb_uart_tb;
   
   parameter PERIOD = 20;
 
+  // system signal generation
   initial begin
     clk = 1'b1;
     rst_n = 1'b0;
@@ -65,6 +66,7 @@ module picoblaze_wb_uart_tb;
   // simple serial loopback
   assign uart_rx_si = uart_tx_so;
 
+  // design under test instance
   picoblaze_wb_uart dut (
     .p_rst_n_i(rst_n),
     .p_clk_i(clk),

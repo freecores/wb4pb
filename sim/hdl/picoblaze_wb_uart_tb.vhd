@@ -71,12 +71,14 @@ architecture behavioral of picoblaze_wb_uart_tb is
   
 begin
 
+  -- system signal generation
   rst_n <= '1' after PERIOD*2;
   clk <= not clk after PERIOD/2;
   
   -- simple serial loopback
   uart_rx_si <= uart_tx_so;
   
+  -- design under test instance
   dut : picoblaze_wb_uart
     port map
     (

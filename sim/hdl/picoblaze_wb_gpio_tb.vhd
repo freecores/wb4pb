@@ -54,14 +54,14 @@ architecture behavioral of picoblaze_wb_gpio_tb is
   component picoblaze_wb_gpio is
     port
     (
-      p_rst_i : in std_logic;
+      p_rst_n_i : in std_logic;
       p_clk_i : in std_logic;
       
       p_gpio_io : inout std_logic_vector(7 downto 0)
     );
   end component;
 
-  signal rst : std_logic := '1';
+  signal rst_n : std_logic := '0';
   signal clk : std_logic := '1';
     
   signal gpio : std_logic_vector(7 downto 0) := (others => 'Z');
@@ -72,20 +72,20 @@ architecture behavioral of picoblaze_wb_gpio_tb is
   
 begin
 
-  rst <= '0' after PERIOD*2;
+  -- system signal generation
+  rst_n <= '1' after PERIOD*2;
   clk <= not clk after PERIOD/2;
   
-  process 
-  begin 
-    wait for 2500 ns;
-    test_data_in <= std_logic_vector(unsigned(test_data_in) + 1);
-  end process;
+  -- 4 bit counting data, changing after some micro seconds
+  test_data_in <= std_logic_vector(unsigned(test_data_in) + 1) after 3000 ns;
+  -- stimulus at upper gpio nibble
   gpio(7 downto 4) <= test_data_in;
   
+  -- design under test instance
   dut : picoblaze_wb_gpio
     port map
     (
-      p_rst_i => rst,
+      p_rst_n_i => rst_n,
       p_clk_i => clk,
       
       p_gpio_io => gpio

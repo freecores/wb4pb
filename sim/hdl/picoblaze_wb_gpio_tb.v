@@ -47,7 +47,7 @@
 
 module picoblaze_wb_gpio_tb;
 
-  reg rst;
+  reg rst_n;
   reg clk;
     
   wire[7:0] gpio;
@@ -56,19 +56,23 @@ module picoblaze_wb_gpio_tb;
 
   reg[7:4] test_data_in;
   
+  // system signal generation
   initial begin
     test_data_in = 4'h0;
     clk = 1'b1;
-    rst = 1'b1;
-    #(PERIOD*2) rst = 1'b0;
+    rst_n = 1'b0;
+    #(PERIOD*2) rst_n = 1'b1;
   end 
   always #(PERIOD/2) clk = ! clk;
   
-  always #2500 test_data_in = test_data_in + 1;
+  // 4 bit counting data, changing after some micro seconds
+  always #3000 test_data_in = test_data_in + 1;
+  // stimulus at upper gpio nibble
   assign gpio[7:4] = test_data_in;
 
+  // design under test instance
   picoblaze_wb_gpio dut (
-    .p_rst_i(rst),
+    .p_rst_n_i(rst_n),
     .p_clk_i(clk),
     
     .p_gpio_io(gpio)
