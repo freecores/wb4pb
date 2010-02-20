@@ -171,12 +171,10 @@ uart_clr_buff:
   ; checking data present flag
   TEST wb_data , UART_SR_RX_DP_FLAG
   ; if flag is not set, returning immediately
-  JUMP NZ , uart_clr_buff_l0
-    RETURN
+  RETURN Z
   ; else reading out next byte and checking flag again
-  uart_clr_buff_l0:
-    CALL uart_rd_byte
-    JUMP uart_clr_buff
+  CALL uart_rd_byte
+  JUMP uart_clr_buff
 
 ; register and flag addressing
 CONSTANT UART_RXTX_ADDR , 00 ; receive/transmit data pipe
