@@ -49,7 +49,7 @@ module picoblaze_wb_gpio (
 );
 
   input p_rst_n_i;
-  wire  p_rst_i;
+  wire  p_rst_n_i;
   input p_clk_i;
   wire  p_clk_i;
   
