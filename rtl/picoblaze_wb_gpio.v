@@ -89,7 +89,7 @@ module picoblaze_wb_gpio (
   integer i;
   
   // reset synchronisation
-  always@(clk)
+  always@(posedge clk)
     rst <= ! p_rst_n_i;
   assign clk = p_clk_i;
   

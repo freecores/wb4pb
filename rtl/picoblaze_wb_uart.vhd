@@ -153,7 +153,9 @@ begin
   -- reset synchronisation
   process(clk)
   begin
-    rst <= not p_rst_n_i;
+    if rising_edge(clk) then
+      rst <= not p_rst_n_i;
+    end if;
   end process;
   clk <= p_clk_i;
   

@@ -82,7 +82,7 @@ module picoblaze_wb_uart (
   wire interrupt_ack;
     
   // reset synchronisation
-  always@(clk)
+  always@(posedge clk)
     rst <= ! p_rst_n_i;
   assign clk = p_clk_i;
   
