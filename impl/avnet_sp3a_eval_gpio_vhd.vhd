@@ -168,7 +168,9 @@ begin
   -- reset synchronisation
   process(clk)
   begin
-    rst <= FPGA_RESET;
+    if rising_edge(clk) then
+      rst <= FPGA_RESET;
+    end if;
   end process;
   clk <= CLK_16MHZ;
   

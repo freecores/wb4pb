@@ -131,8 +131,11 @@ module avnet_sp3a_eval_uart_vlog (
   );
   
   // reset synchronisation
-  always@(clk)
-    rst <= ! dcm_locked;
+  always@(negedge dcm_locked or posedge clk)
+    if (! dcm_locked)
+      rst <= 1'b1;
+    else
+      rst <= ! dcm_locked;
   
   // module instances
   ///////////////////

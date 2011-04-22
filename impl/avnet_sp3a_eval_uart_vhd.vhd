@@ -204,9 +204,13 @@ begin
     );
 
   -- reset synchronisation
-  process(clk)
+  process(dcm_locked, clk)
   begin
-    rst <= not dcm_locked;
+    if dcm_locked = '0' then
+      rst <= '1';
+    elsif rising_edge(clk) then
+      rst <= not dcm_locked;
+    end if;
   end process;
    
   -- module instances

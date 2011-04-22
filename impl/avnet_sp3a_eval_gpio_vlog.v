@@ -106,7 +106,7 @@ module avnet_sp3a_eval_gpio_vlog (
   reg[23:0] timer;
   
   // reset synchronisation
-  always@(clk)
+  always@(posedge clk)
     rst <= FPGA_RESET;
   assign clk = CLK_16MHZ;
   
