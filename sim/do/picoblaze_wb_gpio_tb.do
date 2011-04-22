@@ -43,9 +43,11 @@
 # IMPORTANT NOTICE!
 # Verilog (R) simulation flow requires Xilinx (R) ISE (R) to be installed.
 
-# user settings: preferred hdl and working directory
-set wd "e:/home_users/ste.fis/projects/wb4pb/trunk/sim"
+# user settings: preferred hdl, working directory and Xilinx (R) ISE (R)
+# installation path (needed for Verilog (R) simulation)
+set wd "d:/projects/wb4pb/sim"
 set isVHDL yes
+set XILINX_ISE_PATH "c:/xilinx/13.1"
 
 # working directory cannot be changed while simulation is running
 if {![string equal -nocase [pwd] $wd]} {
@@ -78,7 +80,7 @@ if {$isVHDL} {
   vlog "../rtl/kcpsm3.v"
   vlog "../asm/pbwbgpio.v"
   vlog "../sim/hdl/picoblaze_wb_gpio_tb.v"
-  vlog "$env(XILINX)/verilog/src/glbl.v"
+  vlog "${XILINX_ISE_PATH}/ise_ds/ise/verilog/src/glbl.v"
   
   vsim picoblaze_wb_gpio_tb glbl
   
